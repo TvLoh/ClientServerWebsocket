@@ -8,6 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocketMessageBroker
+
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
@@ -15,8 +16,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
     }
-
-//Eingangstüre definieren registerStompEndpoint ist eine mögliche Methode
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/gs-guide-websocket").withSockJS();
