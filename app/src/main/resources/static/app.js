@@ -1,14 +1,9 @@
 var stompClient = null;
 
 function setConnected(connected) {
+    $("#conversation").show();
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
     $("#greetings").html("");
 }
 
@@ -18,7 +13,7 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/session', function (greeting) {
+        stompClient.subscribe('/topic/greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
@@ -33,7 +28,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/id", {}, JSON.stringify({'id': $("#name").val()}));
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
 }
 
 function showGreeting(message) {
